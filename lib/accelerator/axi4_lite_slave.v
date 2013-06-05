@@ -1,6 +1,7 @@
 module axi4_lite_slave
 #(
   parameter C_BASEADDR         = 32'h40000000,
+  parameter C_HIGHADDR         = 32'h4001ffff,
   parameter C_S_AXI_ADDR_WIDTH = 32,
   parameter C_S_AXI_DATA_WIDTH = 32
 )
@@ -75,7 +76,6 @@ module axi4_lite_slave
     endcase
   end
 
-//  assign get_stb       = S_AXI_RVALID & S_AXI_RREADY;
   assign get_stb       = (rd_state == STATE_RD_GET_DATA);
 
   assign S_AXI_RDATA   = get_data;
