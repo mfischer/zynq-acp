@@ -23,7 +23,7 @@ module axi4_lite_slave
   input                              S_AXI_AWVALID,
   output                             S_AXI_AWREADY,
   input [C_S_AXI_DATA_WIDTH-1:0]     S_AXI_WDATA,
-  input [(C_S_AXI_DATA_WIDTH/4)-1:0] S_AXI_WSTRB,
+  input [(C_S_AXI_DATA_WIDTH/8)-1:0] S_AXI_WSTRB,
   input                              S_AXI_WVALID,
   output                             S_AXI_WREADY,
   output [1:0]                       S_AXI_BRESP,
