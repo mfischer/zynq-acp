@@ -120,7 +120,7 @@ module axi4_stream_master
     wire [4:0] cmd_addr_count;
     wire [4:0] cmd_size_count;
 
-    wire [C_M_AXIS_CMD_DATA_WIDTH-1:0] sts_readback;
+    wire [C_M_AXIS_STS_DATA_WIDTH-1:0] sts_readback;
 
     wire [C_S_AXI_DATA_WIDTH-1:0] cmd_size;
     wire [C_S_AXI_ADDR_WIDTH-1:0] cmd_addr;
@@ -185,9 +185,9 @@ module axi4_stream_master
       .s_aclk(clk), .s_aresetn(!rst),
       .s_axis_tvalid(write_sts || dm_sts_tvalid),
       .s_axis_tready(sts_tready_muxed[m]),
-      .s_axis_tdata(write_sts ? set_data[C_M_AXIS_STS_DATA_WIDTH-1:0] : sts_tdata),
+      .s_axis_tdata(write_sts ? set_data[C_M_AXIS_STS_DATA_WIDTH-1:0] : S_AXIS_STS_TDATA),
       .m_axis_tvalid(),
-      .m_axis_tready(write_status_rdy),
+      .m_axis_tready(write_sts_rdy),
       .m_axis_tdata(sts_readback),
       .axis_data_count(sts_data_count)
     );

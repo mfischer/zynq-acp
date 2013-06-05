@@ -110,7 +110,7 @@ module zc702(
     accelerator acc0
     (
       .clk(bus_clk),
-      .rst(bus_reset),
+      .rst(bus_rst),
       .S_AXI_AWADDR(axi_ext_slave_conn_0_M_AXI_AWADDR_pin),
       .S_AXI_AWVALID(axi_ext_slave_conn_0_M_AXI_AWVALID_pin),
       .S_AXI_AWREADY(axi_ext_slave_conn_0_M_AXI_AWREADY_pin),

@@ -103,7 +103,7 @@ module axi4_lite_slave
 
     STATE_WR_GET_ADDR: begin
       if (S_AXI_AWVALID && S_AXI_AWREADY) begin
-        set_addr  <= (S_AXI_ARADDR - C_BASEADDR);
+        set_addr  <= (S_AXI_AWADDR - C_BASEADDR);
         wr_state  <= STATE_WR_GET_DATA;
       end
     end
