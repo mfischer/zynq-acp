@@ -90,6 +90,7 @@ module zc702(
     wire [2:0] axi_ext_master_conn_0_S_AXI_ARSIZE_pin;
     wire axi_ext_master_conn_0_S_AXI_RLAST_pin;
 
+    wire [15:0] processing_system7_0_IRQ_F2P_pin;
     //------------------------------------------------------------------
     //-- generate clock and reset signals
     //------------------------------------------------------------------
@@ -102,8 +103,6 @@ module zc702(
 
     wire bus_rst;
     reset_sync bus_sync(.clk(bus_clk), .reset_in(reset_global), .reset_out(bus_rst));
-
-    wire stream_irq;
 
     //------------------------------------------------------------------
     //-- accelerator
@@ -160,7 +159,9 @@ module zc702(
       .M_AXI_ARCACHE(axi_ext_master_conn_0_S_AXI_ARCACHE_pin),
       .M_AXI_ARLEN(axi_ext_master_conn_0_S_AXI_ARLEN_pin),
       .M_AXI_ARBURST(axi_ext_master_conn_0_S_AXI_ARBURST_pin),
-      .M_AXI_ARSIZE(axi_ext_master_conn_0_S_AXI_ARSIZE_pin)
+      .M_AXI_ARSIZE(axi_ext_master_conn_0_S_AXI_ARSIZE_pin),
+
+      .irq(processing_system7_0_IRQ_F2P_pin[0])
     );
 
     //------------------------------------------------------------------

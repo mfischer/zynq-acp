@@ -68,7 +68,9 @@ module accelerator
   output [3:0]                      M_AXI_ARCACHE,
   output [7:0]                      M_AXI_ARLEN,
   output [1:0]                      M_AXI_ARBURST,
-  output [2:0]                      M_AXI_ARSIZE
+  output [2:0]                      M_AXI_ARSIZE,
+
+  output                            irq
 );
   // AXI stream to custom hardware
   wire [C_AXIS_DATA_WIDTH-1:0]         h2s_tdata;
