@@ -238,6 +238,7 @@ module accelerator
     .stream_valid(1'b1)
   );
 
+  wire [10:0] loopback_count;
 
   assign TRIG[0] = get_stb;
   assign TRIG[1] = set_stb;
@@ -247,12 +248,30 @@ module accelerator
   assign DATA[33:2] = get_data;
   assign DATA[65:34] = get_addr;
   assign DATA[97:66] = set_addr;
+  assign DATA[108:98] = loopback_count;
 
+  /*
   axi_demux stream_demux
   (
     .clk(clk),
     .rst(rst)
   );
+  */
+
+  xlnx_axi_fifo loopback_fifo
+  (
+   .s_aclk(clk), .s_aresetn(!rst),
+   .s_axis_tvalid(h2s_tvalid),
+   .s_axis_tready(h2s_tready),
+   .s_axis_tdata(h2s_tdata),
+   .s_axis_tlast(h2s_tlast),
+   .m_axis_tvalid(s2h_tvalid),
+   .m_axis_tready(s2h_tready),
+   .m_axis_tdata(s2h_tdata),
+   .m_axis_tlast(s2h_tlast),
+   .axis_data_count(loopback_count)
+  );
+
 
   xlnx_axi_datamover datamover (
 
