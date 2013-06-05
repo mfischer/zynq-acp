@@ -236,6 +236,13 @@ module accelerator
   assign DATA[65:34] = get_addr;
   assign DATA[97:66] = set_addr;
 
+
+  axi_demux stream_demux
+  (
+    .clk(clk),
+    .rst(rst)
+  );
+
   //assign get_data = (get_stb && (get_addr == 0)) ? 32'hace0b00b
                   //: (get_stb && (get_addr == 4)) ? 32'hace0b004
                   //: 32'hdeadbeef;

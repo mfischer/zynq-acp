@@ -5,4 +5,5 @@ ACCELERATOR_SRCS = $(abspath $(addprefix $(BASE_DIR)/../lib/accelerator/, \
 accelerator.v \
 axi4_lite_slave.v \
 axi4_stream_master.v \
+axi_demux.v \
 ))
