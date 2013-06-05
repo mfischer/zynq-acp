@@ -34,5 +34,3 @@ always @ (posedge clk)
     foo <= foo + 1'b1;
 
 endmodule
-
-
