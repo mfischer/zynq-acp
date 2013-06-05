@@ -202,6 +202,8 @@ module accelerator
 
     .stream_select(1'b0),
     .stream_valid(1'b1)
+
+    //.debug(DATA[163:200])
   );
 
   // AXI 4 stream master to handle host to accelerator
@@ -234,6 +236,8 @@ module accelerator
 
     .stream_select(1'b0),
     .stream_valid(1'b1)
+
+    //.debug(DATA[263:100])
   );
 
 
@@ -246,15 +250,124 @@ module accelerator
   assign DATA[65:34] = get_addr;
   assign DATA[97:66] = set_addr;
 
-
   axi_demux stream_demux
   (
     .clk(clk),
     .rst(rst)
   );
 
-  //assign get_data = (get_stb && (get_addr == 0)) ? 32'hace0b00b
-                  //: (get_stb && (get_addr == 4)) ? 32'hace0b004
-                  //: 32'hdeadbeef;
+  xlnx_axi_datamover datamover (
+
+    // AXI stream to custom hardware reset
+    .m_axi_mm2s_aclk(clk),
+    .m_axi_mm2s_aresetn(!rst),
+    .mm2s_halt(1'b0),
+    .mm2s_halt_cmplt(),
+    .mm2s_err(),
+
+    // AXI stream to custom hardware command
+    .m_axis_mm2s_cmdsts_aclk(clk),
+    .m_axis_mm2s_cmdsts_aresetn(!rst),
+    .s_axis_mm2s_cmd_tvalid(h2s_cmd_tvalid),
+    .s_axis_mm2s_cmd_tready(h2s_cmd_tready),
+    .s_axis_mm2s_cmd_tdata(h2s_cmd_tdata),
+
+    // AXI stream to custom hardware status
+    .m_axis_mm2s_sts_tvalid(h2s_sts_tvalid),
+    .m_axis_mm2s_sts_tready(h2s_sts_tready),
+    .m_axis_mm2s_sts_tdata(h2s_sts_tdata),
+    //.m_axis_mm2s_sts_tkeep(),
+    .m_axis_mm2s_sts_tlast(),
+
+    // store and forward - can always post?
+    .mm2s_allow_addr_req(1'b1),
+    .mm2s_addr_req_posted(),
+    .mm2s_rd_xfer_cmplt(),
+
+    // this will go to the ACP (read)
+    .m_axi_mm2s_arid(),
+    .m_axi_mm2s_araddr(M_AXI_ARADDR),
+    .m_axi_mm2s_arlen(M_AXI_ARLEN),
+    .m_axi_mm2s_arsize(M_AXI_ARSIZE),
+    .m_axi_mm2s_arburst(M_AXI_ARBURST),
+    .m_axi_mm2s_arprot(M_AXI_ARPROT),
+    .m_axi_mm2s_arcache(M_AXI_ARCACHE),
+    .m_axi_mm2s_arvalid(M_AXI_ARVALID),
+    .m_axi_mm2s_arready(M_AXI_ARREADY),
+    .m_axi_mm2s_rdata(M_AXI_RDATA),
+    .m_axi_mm2s_rresp(M_AXI_RRESP),
+    .m_axi_mm2s_rlast(M_AXI_RLAST),
+    .m_axi_mm2s_rvalid(M_AXI_RVALID),
+    .m_axi_mm2s_rready(M_AXI_RREADY),
+
+    // AXI stream to custom hardware
+    .m_axis_mm2s_tdata(h2s_tdata), // TODO flip?!
+    .m_axis_mm2s_tkeep(), // TODO good like this?!
+    .m_axis_mm2s_tlast(h2s_tlast),
+    .m_axis_mm2s_tvalid(h2s_tvalid),
+    .m_axis_mm2s_tready(h2s_tready),
+
+    // we're not using debug
+    .mm2s_dbg_sel(4'b0),
+    .mm2s_dbg_data(),
+
+    // AXI stream from custom hardware reset
+    .m_axi_s2mm_aclk(clk),
+    .m_axi_s2mm_aresetn(!rst),
+    .s2mm_halt(1'b0),
+    .s2mm_halt_cmplt(),
+    .s2mm_err(),
+
+    // AXI stream from custom hardware command
+    .m_axis_s2mm_cmdsts_awclk(clk),
+    .m_axis_s2mm_cmdsts_aresetn(!rst),
+    .s_axis_s2mm_cmd_tvalid(s2h_cmd_tvalid),
+    .s_axis_s2mm_cmd_tready(s2h_cmd_tready),
+    .s_axis_s2mm_cmd_tdata(s2h_cmd_tdata),
+
+    // AXI stream from custom hardware status
+    .m_axis_s2mm_sts_tvalid(s2h_sts_tvalid),
+    .m_axis_s2mm_sts_tready(s2h_sts_tready),
+    .m_axis_s2mm_sts_tdata(s2h_sts_tdata),
+    .m_axis_s2mm_sts_tkeep(),
+    .m_axis_s2mm_sts_tlast(),
+
+    // store and forward - can always post?
+    .s2mm_allow_addr_req(1'b1),
+    .s2mm_addr_req_posted(),
+    .s2mm_wr_xfer_cmplt(),
+    .s2mm_ld_nxt_len(),
+    .s2mm_wr_len(),
+
+    // this will go to the ACP (write)
+    .m_axi_s2mm_awid(),
+    .m_axi_s2mm_awaddr(M_AXI_AWADDR),
+    .m_axi_s2mm_awlen(M_AXI_AWLEN),
+    .m_axi_s2mm_awsize(M_AXI_AWSIZE),
+    .m_axi_s2mm_awburst(M_AXI_AWBURST),
+    .m_axi_s2mm_awprot(M_AXI_AWPROT),
+    .m_axi_s2mm_awcache(M_AXI_AWCACHE),
+    .m_axi_s2mm_awvalid(M_AXI_AWVALID),
+    .m_axi_s2mm_awready(M_AXI_AWREADY),
+    .m_axi_s2mm_wdata(M_AXI_WDATA),
+    .m_axi_s2mm_wstrb(M_AXI_WSTRB),
+    .m_axi_s2mm_wlast(M_AXI_WLAST),
+    .m_axi_s2mm_wvalid(M_AXI_WVALID),
+    .m_axi_s2mm_wready(M_AXI_WREADY),
+    .m_axi_s2mm_bresp(M_AXI_BRESP),
+    .m_axi_s2mm_bvalid(M_AXI_BVALID),
+    .m_axi_s2mm_bready(M_AXI_BREADY),
+
+    // AXI stream from custom hardware
+    .s_axis_s2mm_tdata(s2h_tdata), // TODO flip?!
+    .s_axis_s2mm_tkeep(8'hff), // keep 'em all
+    .s_axis_s2mm_tlast(s2h_tlast),
+    .s_axis_s2mm_tvalid(s2h_tvalid),
+    .s_axis_s2mm_tready(s2h_tready),
+
+    // we're not using debug
+    .s2mm_dbg_sel(4'b0),
+    .s2mm_dbg_data()
+  );
 
 endmodule
