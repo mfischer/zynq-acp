@@ -204,8 +204,6 @@ module accelerator
 
     .stream_select(1'b0),
     .stream_valid(1'b1)
-
-    //.debug(DATA[163:200])
   );
 
   // AXI 4 stream master to handle host to accelerator
@@ -238,8 +236,6 @@ module accelerator
 
     .stream_select(1'b0),
     .stream_valid(1'b1)
-
-    //.debug(DATA[263:100])
   );
 
 
