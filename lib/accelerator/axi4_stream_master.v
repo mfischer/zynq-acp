@@ -42,7 +42,7 @@ module axi4_stream_master
 
   /* select what to connect to get_data output */
   reg [C_S_AXI_DATA_WIDTH-1:0] get_data_muxed [NUM_STREAMS-1:0];
-  assign get_data = get_data_muxed[get_data[C_STREAMS_WIDTH+4:5]];
+  assign get_data = get_data_muxed[get_addr[C_STREAMS_WIDTH+4:5]];
 
   /* cmd + sts fifo mux signals */
   wire [C_M_AXIS_CMD_DATA_WIDTH-1:0] cmd_data_muxed [NUM_STREAMS-1:0];
@@ -93,6 +93,9 @@ module axi4_stream_master
 
   wire do_cmd = (state == STATE_ASSERT_DO_CMD);
   wire do_sts = (state == STATE_ASSERT_DO_STS);
+
+  assign M_AXIS_CMD_TVALID = do_cmd && cmd_tvalid_muxed[current_stream];
+  assign S_AXIS_STS_TREADY = do_sts && sts_tready_muxed[current_stream];
 
   /* Some regs to poke at */
 
