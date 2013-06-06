@@ -8,11 +8,11 @@ module axi4_stream_master
   parameter C_PAGEWIDTH             = 16
 )
 (
-  /* reset and clk */
+  // reset and clk
   input                                     clk,
   input                                     rst,
 
-  /* these go to the datamover */
+  // these go to the datamover
   output                                    M_AXIS_CMD_TVALID,
   input                                     M_AXIS_CMD_TREADY,
   output [C_M_AXIS_CMD_DATA_WIDTH-1:0]      M_AXIS_CMD_TDATA,
@@ -40,11 +40,11 @@ module axi4_stream_master
 
   reg [C_STREAMS_WIDTH-1:0] current_stream;
 
-  /* select what to connect to get_data output */
+  // select what to connect to get_data output
   reg [C_S_AXI_DATA_WIDTH-1:0] get_data_muxed [NUM_STREAMS-1:0];
   assign get_data = get_data_muxed[get_addr[C_STREAMS_WIDTH+4:5]];
 
-  /* cmd + sts fifo mux signals */
+  // cmd + sts fifo mux signals
   wire [C_M_AXIS_CMD_DATA_WIDTH-1:0] cmd_data_muxed [NUM_STREAMS-1:0];
   assign M_AXIS_CMD_TDATA = cmd_data_muxed[current_stream];
 
@@ -58,7 +58,7 @@ module axi4_stream_master
   localparam STATE_ASSERT_DO_STS = 2;
   localparam STATE_SOME_IDLE = 3;
 
-  /* select the stream that will be used */
+  // select the stream that will be used
   always @(posedge clk) begin
     if (rst) begin
       state          <= STATE_SET_WHICH_STREAM;
@@ -97,10 +97,10 @@ module axi4_stream_master
   assign M_AXIS_CMD_TVALID = do_cmd && cmd_tvalid_muxed[current_stream];
   assign S_AXIS_STS_TREADY = do_sts && sts_tready_muxed[current_stream];
 
-  /* Some regs to poke at */
 
   wire [14:0] dbg [NUM_STREAMS-1:0];
 
+  // Some regs to poke at
   genvar m;
   generate
 
@@ -112,7 +112,7 @@ module axi4_stream_master
     wire [15:0] this_streamer = m;
 
 
-    /* Write registers */
+    // Write registers
     wire [C_PAGEWIDTH-3:0] set_addr_aligned = set_addr[C_PAGEWIDTH-1:2];
     wire write_clear   = set_stb && (set_addr_aligned == (0 + m*8));
     wire write_addr    = set_stb && (set_addr_aligned == (1 + m*8));
@@ -120,7 +120,7 @@ module axi4_stream_master
     wire write_sts_rdy = set_stb && (set_addr_aligned == (3 + m*8));
     wire write_sts     = set_stb && (set_addr_aligned == (4 + m*8));
 
-    /* Fill counts for fifos */
+    // Fill counts for fifos
     wire [4:0] sts_data_count;
     wire [4:0] cmd_addr_count;
     wire [4:0] cmd_size_count;
@@ -130,7 +130,7 @@ module axi4_stream_master
     wire [C_S_AXI_DATA_WIDTH-1:0] cmd_size;
     wire [C_S_AXI_ADDR_WIDTH-1:0] cmd_addr;
 
-    /* Read registers */
+    // Read registers
     wire [C_PAGEWIDTH-3:0] get_addr_aligned = get_addr[C_PAGEWIDTH-1:2];
     wire read_sig            = (get_addr_aligned == (0 + m*8));
     wire read_status         = (get_addr_aligned == (4 + m*8));
