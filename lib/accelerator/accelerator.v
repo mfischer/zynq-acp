@@ -203,7 +203,9 @@ module accelerator
     .get_stb(get_stb_s2h),
 
     .stream_select(1'b0),
-    .stream_valid(1'b1)
+    .stream_valid(1'b1),
+
+    .debug(DATA[183:120])
   );
 
   // AXI 4 stream master to handle host to accelerator
@@ -235,7 +237,9 @@ module accelerator
     .get_stb(get_stb_h2s),
 
     .stream_select(1'b0),
-    .stream_valid(1'b1)
+    .stream_valid(1'b1),
+
+    .debug(DATA[283:220])
   );
 
   wire [10:0] loopback_count;
@@ -249,6 +253,23 @@ module accelerator
   assign DATA[65:34] = get_addr;
   assign DATA[97:66] = set_addr;
   assign DATA[108:98] = loopback_count;
+
+  assign DATA[309]     = h2s_cmd_tvalid;
+  assign DATA[381:310] = h2s_cmd_tdata;
+  assign DATA[382]     = h2s_cmd_tready;
+
+  assign DATA[383]     = h2s_sts_tvalid;
+  assign DATA[391:384] = h2s_sts_tdata;
+  assign DATA[392]     = h2s_sts_tready;
+
+  assign DATA[409]     = s2h_cmd_tvalid;
+  assign DATA[481:410] = s2h_cmd_tdata;
+  assign DATA[482]     = s2h_cmd_tready;
+
+  assign DATA[483]     = s2h_sts_tvalid;
+  assign DATA[491:484] = s2h_sts_tdata;
+  assign DATA[492]     = s2h_sts_tready;
+
 
   /*
   axi_demux stream_demux

@@ -96,6 +96,8 @@ module axi4_stream_master
 
   /* Some regs to poke at */
 
+  wire [14:0] dbg [NUM_STREAMS-1:0];
+
   genvar m;
   generate
 
@@ -192,8 +194,13 @@ module axi4_stream_master
       .axis_data_count(sts_data_count)
     );
 
+    assign dbg[m] = {cmd_addr_count, cmd_size_count, sts_data_count};
 
   end
   endgenerate
+
+  assign debug [15:0]  = dbg[0];
+  assign debug [29:16] = dbg[1];
+  assign debug [31:30] = state;
 
 endmodule
