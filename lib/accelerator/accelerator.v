@@ -279,6 +279,26 @@ module accelerator
   );
   */
 
+  // hook up debug to ACP read signals
+  assign DATA[543:512] = M_AXI_ARADDR;
+  assign DATA[544]     = M_AXI_ARVALID;
+  assign DATA[545]     = M_AXI_ARREADY;
+  assign DATA[609:546] = M_AXI_RDATA;
+  assign DATA[610]     = M_AXI_RVALID;
+  assign DATA[611]     = M_AXI_RREADY;
+
+  assign TRIG[3]       = M_AXI_RVALID;
+
+  // hook up debug to ACP write signals
+  assign DATA[643:612] = M_AXI_AWADDR;
+  assign DATA[644]     = M_AXI_AWVALID;
+  assign DATA[645]     = M_AXI_AWREADY;
+  assign DATA[709:646] = M_AXI_WDATA;
+  assign DATA[710]     = M_AXI_WVALID;
+  assign DATA[711]     = M_AXI_WREADY;
+
+  assign TRIG[2]       = M_AXI_WVALID;
+
   xlnx_axi_fifo loopback_fifo
   (
    .s_aclk(clk), .s_aresetn(!rst),
@@ -292,6 +312,18 @@ module accelerator
    .m_axis_tlast(s2h_tlast),
    .axis_data_count(loopback_count)
   );
+
+  // hook up debug to loopback fifo in and out
+  assign DATA[775:712] = h2s_tdata;
+  assign DATA[776]     = h2s_tvalid;
+  assign DATA[777]     = h2s_tready;
+  assign DATA[778]     = h2s_tlast;
+
+  assign DATA[842:779] = s2h_tdata;
+  assign DATA[843]     = s2h_tvalid;
+  assign DATA[844]     = s2h_tready;
+  assign DATA[845]     = s2h_tlast;
+
 
 
   xlnx_axi_datamover datamover (
