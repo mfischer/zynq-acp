@@ -1,4 +1,5 @@
 # Output products list for <xlnx_axi_fifo>
+_xmsgs/pn_parser.xmsgs
 xlnx_axi_fifo/doc/fifo_generator_v9_3_readme.txt
 xlnx_axi_fifo/doc/fifo_generator_v9_3_vinfo.html
 xlnx_axi_fifo/doc/pg057-fifo-generator.pdf

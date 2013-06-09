@@ -44,6 +44,6 @@ PINATTR PinName s_axis_tlast
 PINATTR Polarity IN
 LINE Wide 832 1232 800 1232
 PIN 832 1232 RIGHT 36
-PINATTR PinName axis_data_count[10:0]
+PINATTR PinName axis_data_count[13:0]
 PINATTR Polarity OUT
 

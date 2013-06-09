@@ -60,13 +60,13 @@ output m_axis_tvalid;
 input m_axis_tready;
 output [63 : 0] m_axis_tdata;
 output m_axis_tlast;
-output [10 : 0] axis_data_count;
+output [13 : 0] axis_data_count;
 
 // synthesis translate_off
 
   FIFO_GENERATOR_V9_3 #(
     .C_ADD_NGC_CONSTRAINT(0),
-    .C_APPLICATION_TYPE_AXIS(0),
+    .C_APPLICATION_TYPE_AXIS(1),
     .C_APPLICATION_TYPE_RACH(0),
     .C_APPLICATION_TYPE_RDCH(0),
     .C_APPLICATION_TYPE_WACH(0),
@@ -175,7 +175,7 @@ output [10 : 0] axis_data_count;
     .C_PRELOAD_REGS(0),
     .C_PRIM_FIFO_TYPE("4kx4"),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL(2),
-    .C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS(1022),
+    .C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS(8190),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL_RACH(14),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL_RDCH(1022),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL_WACH(14),
@@ -190,7 +190,7 @@ output [10 : 0] axis_data_count;
     .C_PROG_EMPTY_TYPE_WDCH(0),
     .C_PROG_EMPTY_TYPE_WRCH(0),
     .C_PROG_FULL_THRESH_ASSERT_VAL(1022),
-    .C_PROG_FULL_THRESH_ASSERT_VAL_AXIS(1023),
+    .C_PROG_FULL_THRESH_ASSERT_VAL_AXIS(8191),
     .C_PROG_FULL_THRESH_ASSERT_VAL_RACH(15),
     .C_PROG_FULL_THRESH_ASSERT_VAL_RDCH(1023),
     .C_PROG_FULL_THRESH_ASSERT_VAL_WACH(15),
@@ -238,7 +238,7 @@ output [10 : 0] axis_data_count;
     .C_WR_ACK_LOW(0),
     .C_WR_DATA_COUNT_WIDTH(10),
     .C_WR_DEPTH(1024),
-    .C_WR_DEPTH_AXIS(1024),
+    .C_WR_DEPTH_AXIS(8192),
     .C_WR_DEPTH_RACH(16),
     .C_WR_DEPTH_RDCH(1024),
     .C_WR_DEPTH_WACH(16),
@@ -246,7 +246,7 @@ output [10 : 0] axis_data_count;
     .C_WR_DEPTH_WRCH(16),
     .C_WR_FREQ(1),
     .C_WR_PNTR_WIDTH(10),
-    .C_WR_PNTR_WIDTH_AXIS(10),
+    .C_WR_PNTR_WIDTH_AXIS(13),
     .C_WR_PNTR_WIDTH_RACH(4),
     .C_WR_PNTR_WIDTH_RDCH(10),
     .C_WR_PNTR_WIDTH_WACH(4),

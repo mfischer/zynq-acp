@@ -246,17 +246,18 @@ module accelerator
     .debug(DATA[283:220])
   );
 
-  wire [10:0] loopback_count;
+  wire [13:0] loopback_count;
 
   assign TRIG[0] = get_stb;
   assign TRIG[1] = set_stb;
+
 
   assign DATA[0] = get_stb_s2h;
   assign DATA[1] = set_stb_s2h;
   assign DATA[33:2] = get_data;
   assign DATA[65:34] = get_addr;
   assign DATA[97:66] = set_addr;
-  assign DATA[108:98] = loopback_count;
+  assign DATA[111:98] = loopback_count;
 
   assign DATA[309]     = h2s_cmd_tvalid;
   assign DATA[381:310] = h2s_cmd_tdata;
