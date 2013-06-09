@@ -159,7 +159,7 @@ module axi4_stream_master
 
     xlnx_axi_fifo32 addr_fifo
     (
-      .s_aclk(clk), .s_aresetn(!rst),
+      .s_aclk(clk), .s_aresetn(!rst || !write_clear),
       .s_axis_tvalid(write_addr),
       .s_axis_tready(),
       .s_axis_tdata(set_data),
@@ -171,7 +171,7 @@ module axi4_stream_master
 
     xlnx_axi_fifo32 size_fifo
     (
-      .s_aclk(clk), .s_aresetn(!rst),
+      .s_aclk(clk), .s_aresetn(!rst || !write_clear),
       .s_axis_tvalid(write_size),
       .s_axis_tready(),
       .s_axis_tdata(set_data),
