@@ -251,6 +251,8 @@ module accelerator
   assign TRIG[0] = get_stb;
   assign TRIG[1] = set_stb;
 
+  assign TRIG[4] = h2s_sts_tvalid;
+  assign TRIG[5] = s2h_sts_tvalid;
 
   assign DATA[0] = get_stb_s2h;
   assign DATA[1] = set_stb_s2h;
