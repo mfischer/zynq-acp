@@ -167,15 +167,15 @@ module accelerator
   );
 
   // memory is paged into two pages
-  wire set_stb_s2h = set_stb && !set_addr[C_PAGEWIDTH];
-  wire get_stb_s2h = get_stb && !get_addr[C_PAGEWIDTH];
+  wire set_stb_s2h = set_stb && set_addr[C_PAGEWIDTH];
+  wire get_stb_s2h = get_stb && get_addr[C_PAGEWIDTH];
   wire [C_S_AXI_DATA_WIDTH-1:0] get_data_s2h;
 
-  wire set_stb_h2s = set_stb &&  set_addr[C_PAGEWIDTH];
-  wire get_stb_h2s = get_stb &&  get_addr[C_PAGEWIDTH];
+  wire set_stb_h2s = set_stb && !set_addr[C_PAGEWIDTH];
+  wire get_stb_h2s = get_stb && !get_addr[C_PAGEWIDTH];
   wire [C_S_AXI_DATA_WIDTH-1:0] get_data_h2s;
 
-  assign get_data = (!get_addr[C_PAGEWIDTH])? get_data_s2h : get_data_h2s;
+  assign get_data = (get_addr[C_PAGEWIDTH])? get_data_s2h : get_data_h2s;
 
 
   // AXI 4 stream master to handle accelerator to host
