@@ -161,7 +161,7 @@ module zc702(
       .M_AXI_ARBURST(axi_ext_master_conn_0_S_AXI_ARBURST_pin),
       .M_AXI_ARSIZE(axi_ext_master_conn_0_S_AXI_ARSIZE_pin),
 
-      .irq(processing_system7_0_IRQ_F2P_pin[0])
+      .irq(processing_system7_0_IRQ_F2P_pin[15])
     );
 
     //------------------------------------------------------------------

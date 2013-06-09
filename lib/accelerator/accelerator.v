@@ -72,6 +72,10 @@ module accelerator
 
   output                            irq
 );
+
+  // For the moment we have a shared interrupt
+  assign irq = h2s_sts_tready | s2h_sts_tready;
+
   // AXI stream to custom hardware
   wire [C_AXIS_DATA_WIDTH-1:0]         h2s_tdata;
   wire                                 h2s_tlast;
