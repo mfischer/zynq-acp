@@ -105,6 +105,24 @@ module accelerator
   wire                                 s2h_sts_tready;
 
   //------------------------------------------------------------------
+  //-- hopefully fix misbehaving axi datamover
+  //------------------------------------------------------------------
+  //only active in cycles between command and tlast
+  //this prevents bullshit consumption after tlast
+  reg s2h_active;
+  always @(posedge clk) begin
+    if (rst) s2h_active <= 1;
+    else if (s2h_cmd_tvalid && s2h_cmd_tready) s2h_active <= 1;
+    else if (s2h_tready && s2h_tvalid && s2h_tlast) s2h_active <= 0;
+  end
+
+  //cut fifo comms when not in active state
+  wire s2h_tready_int, s2h_tvalid_int;
+  assign s2h_tvalid_int = s2h_tvalid && s2h_active;
+  assign s2h_tready = s2h_tready_int && s2h_active;
+
+
+  //------------------------------------------------------------------
   //-- chipscope
   //------------------------------------------------------------------
   wire [35:0] CONTROL;
@@ -177,7 +195,6 @@ module accelerator
 
   assign get_data = (get_addr[C_PAGEWIDTH])? get_data_s2h : get_data_h2s;
 
-
   // AXI 4 stream master to handle accelerator to host
   axi4_stream_master #
   ( .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
@@ -211,6 +228,7 @@ module accelerator
 
     .debug(DATA[183:120])
   );
+
 
   // AXI 4 stream master to handle host to accelerator
   axi4_stream_master #
@@ -246,7 +264,7 @@ module accelerator
     .debug(DATA[283:220])
   );
 
-  wire [13:0] loopback_count;
+  wire [14:0] loopback_count;
 
   assign TRIG[0] = get_stb;
   assign TRIG[1] = set_stb;
@@ -259,7 +277,10 @@ module accelerator
   assign DATA[33:2] = get_data;
   assign DATA[65:34] = get_addr;
   assign DATA[97:66] = set_addr;
-  assign DATA[111:98] = loopback_count;
+  assign DATA[112:98] = loopback_count;
+
+  assign DATA[113] = h2s_sts_tvalid;
+  assign DATA[114] = s2h_sts_tvalid;
 
   assign DATA[309]     = h2s_cmd_tvalid;
   assign DATA[381:310] = h2s_cmd_tdata;
@@ -276,15 +297,6 @@ module accelerator
   assign DATA[483]     = s2h_sts_tvalid;
   assign DATA[491:484] = s2h_sts_tdata;
   assign DATA[492]     = s2h_sts_tready;
-
-
-  /*
-  axi_demux stream_demux
-  (
-    .clk(clk),
-    .rst(rst)
-  );
-  */
 
   // hook up debug to ACP read signals
   assign DATA[543:512] = M_AXI_ARADDR;
@@ -330,6 +342,9 @@ module accelerator
   assign DATA[843]     = s2h_tvalid;
   assign DATA[844]     = s2h_tready;
   assign DATA[845]     = s2h_tlast;
+
+  assign DATA[846]     = s2h_tvalid_int;
+  assign DATA[847]     = s2h_tready_int;
 
 
 
@@ -439,8 +454,8 @@ module accelerator
     .s_axis_s2mm_tdata(s2h_tdata), // TODO flip?!
     .s_axis_s2mm_tkeep(8'hff), // keep 'em all
     .s_axis_s2mm_tlast(s2h_tlast),
-    .s_axis_s2mm_tvalid(s2h_tvalid),
-    .s_axis_s2mm_tready(s2h_tready),
+    .s_axis_s2mm_tvalid(s2h_tvalid_int),
+    .s_axis_s2mm_tready(s2h_tready_int),
 
     // we're not using debug
     .s2mm_dbg_sel(4'b0),

@@ -80,7 +80,7 @@ entity xlnx_axi_fifo32_exdes is
            S_AXIS_TVALID             : IN  std_logic;
            S_AXIS_TREADY             : OUT std_logic;
            S_AXIS_TDATA              : IN  std_logic_vector(32-1 DOWNTO 0);
-           AXIS_DATA_COUNT           : OUT std_logic_vector(4 DOWNTO 0);
+           AXIS_DATA_COUNT           : OUT std_logic_vector(10 DOWNTO 0);
            S_ACLK                    : IN  std_logic);
 
 end xlnx_axi_fifo32_exdes;
@@ -102,7 +102,7 @@ architecture xilinx of xlnx_axi_fifo32_exdes is
            S_AXIS_TVALID             : IN  std_logic;
            S_AXIS_TREADY             : OUT std_logic;
            S_AXIS_TDATA              : IN  std_logic_vector(32-1 DOWNTO 0);
-           AXIS_DATA_COUNT           : OUT std_logic_vector(4 DOWNTO 0);
+           AXIS_DATA_COUNT           : OUT std_logic_vector(10 DOWNTO 0);
            S_ACLK                    : IN  std_logic);
 
   end component;

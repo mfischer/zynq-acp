@@ -98,7 +98,7 @@ module axi4_stream_master
   assign S_AXIS_STS_TREADY = do_sts && sts_tready_muxed[current_stream];
 
 
-  wire [14:0] dbg [NUM_STREAMS-1:0];
+  wire [32:0] dbg [NUM_STREAMS-1:0];
 
   // Some regs to poke at
   genvar m;
@@ -119,11 +119,13 @@ module axi4_stream_master
     wire write_size    = set_stb && (set_addr_aligned == (2 + m*8));
     wire write_sts_rdy = set_stb && (set_addr_aligned == (3 + m*8));
     wire write_sts     = set_stb && (set_addr_aligned == (4 + m*8));
+    wire write_axuser  = set_stb && (set_addr_aligned == (5 + m*8));
+    wire write_axcache = set_stb && (set_addr_aligned == (6 + m*8));
 
     // Fill counts for fifos
-    wire [4:0] sts_data_count;
-    wire [4:0] cmd_addr_count;
-    wire [4:0] cmd_size_count;
+    wire [10:0] sts_data_count;
+    wire [10:0] cmd_addr_count;
+    wire [10:0] cmd_size_count;
 
     wire [C_M_AXIS_STS_DATA_WIDTH-1:0] sts_readback;
 
@@ -141,9 +143,9 @@ module axi4_stream_master
     always @* begin
       if (read_sig)                 get_data_muxed[m] <= {16'hace0, this_streamer};
       else if (read_status)         get_data_muxed[m] <= {24'b0, sts_readback};
-      else if (read_sts_data_count) get_data_muxed[m] <= {27'b0, sts_data_count};
-      else if (read_cmd_addr_count) get_data_muxed[m] <= {27'b0, cmd_addr_count};
-      else if (read_cmd_size_count) get_data_muxed[m] <= {27'b0, cmd_size_count};
+      else if (read_sts_data_count) get_data_muxed[m] <= {20'b0, sts_data_count};
+      else if (read_cmd_addr_count) get_data_muxed[m] <= {20'b0, cmd_addr_count};
+      else if (read_cmd_size_count) get_data_muxed[m] <= {20'b0, cmd_size_count};
       else                          get_data_muxed[m] <= 32'h12345678;
     end
 
@@ -202,8 +204,7 @@ module axi4_stream_master
   end
   endgenerate
 
-  assign debug [15:0]  = dbg[0];
-  assign debug [29:16] = dbg[1];
-  assign debug [31:30] = state;
+  assign debug [32:0]  = dbg[0];
+  assign debug [34:33] = state;
 
 endmodule

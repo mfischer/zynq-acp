@@ -28,6 +28,7 @@ IP Symbol Generator:
 Generate ISE subproject:
    Create an ISE subproject for use when including this core in ISE designs
 
+   * _xmsgs/pn_parser.xmsgs
    * chipscope_ila_large.gise
    * chipscope_ila_large.xise
 

@@ -82,7 +82,7 @@ entity xlnx_axi_fifo_exdes is
            S_AXIS_TREADY             : OUT std_logic;
            S_AXIS_TDATA              : IN  std_logic_vector(64-1 DOWNTO 0);
            S_AXIS_TLAST              : IN  std_logic;
-           AXIS_DATA_COUNT           : OUT std_logic_vector(13 DOWNTO 0);
+           AXIS_DATA_COUNT           : OUT std_logic_vector(14 DOWNTO 0);
            S_ACLK                    : IN  std_logic);
 
 end xlnx_axi_fifo_exdes;
@@ -106,7 +106,7 @@ architecture xilinx of xlnx_axi_fifo_exdes is
            S_AXIS_TREADY             : OUT std_logic;
            S_AXIS_TDATA              : IN  std_logic_vector(64-1 DOWNTO 0);
            S_AXIS_TLAST              : IN  std_logic;
-           AXIS_DATA_COUNT           : OUT std_logic_vector(13 DOWNTO 0);
+           AXIS_DATA_COUNT           : OUT std_logic_vector(14 DOWNTO 0);
            S_ACLK                    : IN  std_logic);
 
   end component;

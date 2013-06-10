@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 14.5
-# Date: Sun Jun  9 08:42:08 2013
+# Date: Mon Jun 10 17:35:23 2013
 #
 ##############################################################
 #
@@ -58,7 +58,7 @@ CSET disable_timing_violations=false
 CSET disable_timing_violations_axi=false
 CSET dout_reset_value=0
 CSET empty_threshold_assert_value=2
-CSET empty_threshold_assert_value_axis=8190
+CSET empty_threshold_assert_value_axis=16382
 CSET empty_threshold_assert_value_rach=14
 CSET empty_threshold_assert_value_rdch=1022
 CSET empty_threshold_assert_value_wach=14
@@ -97,7 +97,7 @@ CSET enable_tstrobe=false
 CSET enable_tuser=false
 CSET enable_write_channel=false
 CSET enable_wuser=false
-CSET fifo_application_type_axis=Packet_FIFO
+CSET fifo_application_type_axis=Data_FIFO
 CSET fifo_application_type_rach=Data_FIFO
 CSET fifo_application_type_rdch=Data_FIFO
 CSET fifo_application_type_wach=Data_FIFO
@@ -112,7 +112,7 @@ CSET fifo_implementation_wdch=Common_Clock_Block_RAM
 CSET fifo_implementation_wrch=Common_Clock_Distributed_RAM
 CSET full_flags_reset_value=1
 CSET full_threshold_assert_value=1022
-CSET full_threshold_assert_value_axis=8191
+CSET full_threshold_assert_value_axis=16383
 CSET full_threshold_assert_value_rach=15
 CSET full_threshold_assert_value_rdch=1023
 CSET full_threshold_assert_value_wach=15
@@ -136,7 +136,7 @@ CSET inject_sbit_error_wdch=false
 CSET inject_sbit_error_wrch=false
 CSET input_data_width=18
 CSET input_depth=1024
-CSET input_depth_axis=8192
+CSET input_depth_axis=16384
 CSET input_depth_rach=16
 CSET input_depth_rdch=1024
 CSET input_depth_wach=16
@@ -210,4 +210,4 @@ CSET wuser_width=1
 MISC pkg_timestamp=2012-11-19T12:39:56Z
 # END Extra information
 GENERATE
-# CRC:  bee831e
+# CRC: cd87b03a

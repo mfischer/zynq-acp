@@ -56,7 +56,7 @@ input [7 : 0] s_axis_tdata;
 output m_axis_tvalid;
 input m_axis_tready;
 output [7 : 0] m_axis_tdata;
-output [4 : 0] axis_data_count;
+output [10 : 0] axis_data_count;
 
 // synthesis translate_off
 
@@ -171,7 +171,7 @@ output [4 : 0] axis_data_count;
     .C_PRELOAD_REGS(0),
     .C_PRIM_FIFO_TYPE("4kx4"),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL(2),
-    .C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS(14),
+    .C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS(1022),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL_RACH(14),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL_RDCH(1022),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL_WACH(14),
@@ -186,7 +186,7 @@ output [4 : 0] axis_data_count;
     .C_PROG_EMPTY_TYPE_WDCH(0),
     .C_PROG_EMPTY_TYPE_WRCH(0),
     .C_PROG_FULL_THRESH_ASSERT_VAL(1022),
-    .C_PROG_FULL_THRESH_ASSERT_VAL_AXIS(15),
+    .C_PROG_FULL_THRESH_ASSERT_VAL_AXIS(1023),
     .C_PROG_FULL_THRESH_ASSERT_VAL_RACH(15),
     .C_PROG_FULL_THRESH_ASSERT_VAL_RDCH(1023),
     .C_PROG_FULL_THRESH_ASSERT_VAL_WACH(15),
@@ -234,7 +234,7 @@ output [4 : 0] axis_data_count;
     .C_WR_ACK_LOW(0),
     .C_WR_DATA_COUNT_WIDTH(10),
     .C_WR_DEPTH(1024),
-    .C_WR_DEPTH_AXIS(16),
+    .C_WR_DEPTH_AXIS(1024),
     .C_WR_DEPTH_RACH(16),
     .C_WR_DEPTH_RDCH(1024),
     .C_WR_DEPTH_WACH(16),
@@ -242,7 +242,7 @@ output [4 : 0] axis_data_count;
     .C_WR_DEPTH_WRCH(16),
     .C_WR_FREQ(1),
     .C_WR_PNTR_WIDTH(10),
-    .C_WR_PNTR_WIDTH_AXIS(4),
+    .C_WR_PNTR_WIDTH_AXIS(10),
     .C_WR_PNTR_WIDTH_RACH(4),
     .C_WR_PNTR_WIDTH_RDCH(10),
     .C_WR_PNTR_WIDTH_WACH(4),

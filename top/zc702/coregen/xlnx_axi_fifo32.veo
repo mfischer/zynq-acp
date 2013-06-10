@@ -66,7 +66,7 @@ xlnx_axi_fifo32 your_instance_name (
   .m_axis_tvalid(m_axis_tvalid), // output m_axis_tvalid
   .m_axis_tready(m_axis_tready), // input m_axis_tready
   .m_axis_tdata(m_axis_tdata), // output [31 : 0] m_axis_tdata
-  .axis_data_count(axis_data_count) // output [4 : 0] axis_data_count
+  .axis_data_count(axis_data_count) // output [10 : 0] axis_data_count
 );
 // INST_TAG_END ------ End INSTANTIATION Template ---------
 

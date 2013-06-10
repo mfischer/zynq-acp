@@ -107,7 +107,7 @@ ARCHITECTURE simulation_arch OF xlnx_axi_fifo8_synth IS
     SIGNAL s_axis_tvalid                  :   STD_LOGIC;
     SIGNAL s_axis_tready                  :   STD_LOGIC;
     SIGNAL s_axis_tdata                   :   STD_LOGIC_VECTOR(8-1 DOWNTO 0);
-    SIGNAL axis_data_count                :   STD_LOGIC_VECTOR(4 DOWNTO 0);
+    SIGNAL axis_data_count                :   STD_LOGIC_VECTOR(10 DOWNTO 0);
     SIGNAL s_aclk_i		          :   STD_LOGIC;
    -- TB Signals
     SIGNAL prc_we_i                       :   STD_LOGIC := '0';
@@ -227,8 +227,8 @@ ARCHITECTURE simulation_arch OF xlnx_axi_fifo8_synth IS
               C_APPLICATION_TYPE  => 0,
 	      C_DOUT_WIDTH        => 8,
 	      C_DIN_WIDTH         => 8,
-	      C_WR_PNTR_WIDTH     => 4,
-    	      C_RD_PNTR_WIDTH     => 4,
+	      C_WR_PNTR_WIDTH     => 10,
+    	      C_RD_PNTR_WIDTH     => 10,
  	      C_CH_TYPE           => 0,
               FREEZEON_ERROR      => FREEZEON_ERROR,
 	      TB_SEED             => TB_SEED, 
