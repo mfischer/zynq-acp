@@ -9,7 +9,8 @@ module accelerator
   parameter integer C_BASEADDR               = 32'h40000000,
   parameter integer C_HIGHADDR               = 32'h4001ffff,
   parameter         C_PROT                   = 3'b010,
-  parameter         C_PAGEWIDTH              = 16
+  parameter         C_PAGEWIDTH              = 16,
+  parameter integer C_H2S_STREAMS_WIDTH      = 2
 )
 (
   // generic stuff
@@ -198,6 +199,15 @@ module accelerator
 
   assign get_data = (get_page == 2'h1) ? get_data_s2h : get_data_h2s;
 
+
+  // simple round robin implementation for checking available packets
+  reg [C_H2S_STREAMS_WIDTH-1:0] which_stream_h2s;
+  always @(posedge clk)
+    if (rst)
+      which_stream_h2s <= 0;
+    else
+      which_stream_h2s <= which_stream_h2s + 1'b1;
+
   // AXI 4 stream master to handle accelerator to host
   axi4_stream_master #
   ( .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
@@ -261,7 +271,7 @@ module accelerator
     .get_addr(get_addr),
     .get_stb(get_stb_h2s),
 
-    .stream_select(1'b0),
+    .stream_select(which_stream_h2s),
     .stream_valid(1'b1),
 
     .debug(DATA[283:220])

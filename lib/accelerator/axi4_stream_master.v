@@ -1,11 +1,11 @@
 module axi4_stream_master
 #(
-  parameter C_S_AXI_ADDR_WIDTH      = 32,
-  parameter C_S_AXI_DATA_WIDTH      = 32,
-  parameter C_M_AXIS_CMD_DATA_WIDTH = 73,
-  parameter C_M_AXIS_STS_DATA_WIDTH = 8,
-  parameter C_STREAMS_WIDTH         = 2,
-  parameter C_PAGEWIDTH             = 16
+  parameter C_S_AXI_ADDR_WIDTH       = 32,
+  parameter C_S_AXI_DATA_WIDTH       = 32,
+  parameter C_M_AXIS_CMD_DATA_WIDTH  = 73,
+  parameter C_M_AXIS_STS_DATA_WIDTH  = 8,
+  parameter C_STREAMS_WIDTH          = 2,
+  parameter C_PAGEWIDTH              = 16
 )
 (
   // reset and clk
