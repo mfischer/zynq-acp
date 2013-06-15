@@ -9,7 +9,7 @@ module accelerator
   parameter integer C_BASEADDR               = 32'h40000000,
   parameter integer C_HIGHADDR               = 32'h4001ffff,
   parameter         C_PROT                   = 3'b010,
-  parameter         C_PAGEWIDTH              = 16,
+  parameter         C_PAGEWIDTH              = 12,
   parameter integer C_H2S_STREAMS_WIDTH      = 2
 )
 (
@@ -213,7 +213,8 @@ module accelerator
   ( .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
     .C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
     .C_M_AXIS_CMD_DATA_WIDTH(72),
-    .C_M_AXIS_STS_DATA_WIDTH(8)
+    .C_M_AXIS_STS_DATA_WIDTH(8),
+    .C_PAGEWIDTH(C_PAGEWIDTH)
   )
   s2h_master
   (
@@ -248,7 +249,8 @@ module accelerator
   ( .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
     .C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
     .C_M_AXIS_CMD_DATA_WIDTH(72),
-    .C_M_AXIS_STS_DATA_WIDTH(8)
+    .C_M_AXIS_STS_DATA_WIDTH(8),
+    .C_PAGEWIDTH(C_PAGEWIDTH)
   )
   h2s_master
   (
