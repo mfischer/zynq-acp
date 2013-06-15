@@ -74,6 +74,9 @@ module accelerator
   output                            irq
 );
 
+  // sweet sweet lazyness
+  wire rst_n = !rst;
+
   // For the moment we have a shared interrupt
   assign irq = h2s_sts_tvalid | s2h_sts_tvalid;
 
@@ -156,7 +159,7 @@ module accelerator
   slave0
   (
     .S_AXI_ACLK(clk),
-    .S_AXI_ARESETN(!rst),
+    .S_AXI_ARESETN(rst_n),
     .S_AXI_ARADDR(S_AXI_ARADDR),
     .S_AXI_ARVALID(S_AXI_ARVALID),
     .S_AXI_ARREADY(S_AXI_ARREADY),
@@ -185,7 +188,7 @@ module accelerator
     .get_stb(get_stb)
   );
 
-  // memory is paged into two pages
+  // memory is paged into three pages
   wire [1:0] set_page = set_addr[C_PAGEWIDTH+1:C_PAGEWIDTH];
   wire [1:0] get_page = get_addr[C_PAGEWIDTH+1:C_PAGEWIDTH];
 
@@ -199,6 +202,14 @@ module accelerator
 
   assign get_data = (get_page == 2'h1) ? get_data_s2h : get_data_h2s;
 
+  // global
+  wire set_stb_global = set_stb && (set_page == 2'h2);
+  wire get_stb_global = get_stb && (get_page == 2'h2);
+
+  wire soft_reset   = set_stb_global;
+  wire soft_reset_n = !set_stb_global;
+
+  assign TRIG[7] = soft_reset;
 
   // simple round robin implementation for checking available packets
   reg [C_H2S_STREAMS_WIDTH-1:0] which_stream_h2s;
@@ -219,7 +230,7 @@ module accelerator
   s2h_master
   (
     .clk(clk),
-    .rst(rst),
+    .rst(rst || soft_reset),
 
     .M_AXIS_CMD_TVALID(s2h_cmd_tvalid),
     .M_AXIS_CMD_TREADY(s2h_cmd_tready),
@@ -255,7 +266,7 @@ module accelerator
   h2s_master
   (
     .clk(clk),
-    .rst(rst),
+    .rst(rst || soft_reset),
 
     .M_AXIS_CMD_TVALID(h2s_cmd_tvalid),
     .M_AXIS_CMD_TREADY(h2s_cmd_tready),
@@ -335,7 +346,7 @@ module accelerator
 
   xlnx_axi_fifo loopback_fifo
   (
-   .s_aclk(clk), .s_aresetn(!rst),
+   .s_aclk(clk), .s_aresetn(rst_n && soft_reset_n),
    .s_axis_tvalid(h2s_tvalid),
    .s_axis_tready(h2s_tready),
    .s_axis_tdata(h2s_tdata),
@@ -367,14 +378,14 @@ module accelerator
 
     // AXI stream to custom hardware reset
     .m_axi_mm2s_aclk(clk),
-    .m_axi_mm2s_aresetn(!rst),
+    .m_axi_mm2s_aresetn(rst_n && soft_reset_n),
     .mm2s_halt(1'b0),
     .mm2s_halt_cmplt(),
     .mm2s_err(),
 
     // AXI stream to custom hardware command
     .m_axis_mm2s_cmdsts_aclk(clk),
-    .m_axis_mm2s_cmdsts_aresetn(!rst),
+    .m_axis_mm2s_cmdsts_aresetn(rst_n && soft_reset_n),
     .s_axis_mm2s_cmd_tvalid(h2s_cmd_tvalid),
     .s_axis_mm2s_cmd_tready(h2s_cmd_tready),
     .s_axis_mm2s_cmd_tdata(h2s_cmd_tdata),
@@ -420,14 +431,14 @@ module accelerator
 
     // AXI stream from custom hardware reset
     .m_axi_s2mm_aclk(clk),
-    .m_axi_s2mm_aresetn(!rst),
+    .m_axi_s2mm_aresetn(rst_n && soft_reset_n),
     .s2mm_halt(1'b0),
     .s2mm_halt_cmplt(),
     .s2mm_err(),
 
     // AXI stream from custom hardware command
     .m_axis_s2mm_cmdsts_awclk(clk),
-    .m_axis_s2mm_cmdsts_aresetn(!rst),
+    .m_axis_s2mm_cmdsts_aresetn(rst_n && soft_reset_n),
     .s_axis_s2mm_cmd_tvalid(s2h_cmd_tvalid),
     .s_axis_s2mm_cmd_tready(s2h_cmd_tready),
     .s_axis_s2mm_cmd_tdata(s2h_cmd_tdata),
