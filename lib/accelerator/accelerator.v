@@ -10,7 +10,8 @@ module accelerator
   parameter integer C_HIGHADDR               = 32'h4001ffff,
   parameter         C_PROT                   = 3'b010,
   parameter         C_PAGEWIDTH              = 12,
-  parameter integer C_H2S_STREAMS_WIDTH      = 2
+  parameter integer C_H2S_STREAMS_WIDTH      = 2,
+  parameter integer C_S2H_STREAMS_WIDTH      = 2
 )
 (
   // generic stuff
@@ -200,14 +201,35 @@ module accelerator
   wire get_stb_h2s = get_stb && (get_page == 2'h0);
   wire [C_S_AXI_DATA_WIDTH-1:0] get_data_h2s;
 
-  assign get_data = (get_page == 2'h1) ? get_data_s2h : get_data_h2s;
-
-  // global
   wire set_stb_global = set_stb && (set_page == 2'h2);
   wire get_stb_global = get_stb && (get_page == 2'h2);
+  wire [C_S_AXI_DATA_WIDTH-1:0] get_data_global;
 
-  wire soft_reset   = set_stb_global;
+  assign get_data = (get_page == 2'h0) ? get_data_h2s
+                  : (get_page == 2'h1) ? get_data_s2h
+                  : (get_page == 2'h2) ? get_data_global
+                  : 32'hdeadbeef;
+
+  wire soft_reset;
   wire soft_reset_n = !set_stb_global;
+
+  global_settings #
+  (
+    .C_DATAWIDTH(C_S_AXI_DATA_WIDTH),
+    .C_ADDRWIDTH(C_S_AXI_ADDR_WIDTH),
+    .C_PAGEWIDTH(C_PAGEWIDTH)
+  )
+  settings0
+  (
+    .clk(clk), .rst(rst),
+    .get_stb(get_stb_global),
+    .get_addr(get_addr),
+    .get_data(get_data_global),
+    .set_stb(set_stb_global),
+    .set_addr(set_addr),
+    .set_data(set_data),
+    .soft_reset(soft_reset)
+  );
 
   assign TRIG[7] = soft_reset;
 
@@ -371,7 +393,6 @@ module accelerator
 
   assign DATA[846]     = s2h_tvalid_int;
   assign DATA[847]     = s2h_tready_int;
-
 
 
   xlnx_axi_datamover datamover (
