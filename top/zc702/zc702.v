@@ -80,10 +80,12 @@ module zc702(
     wire axi_ext_master_conn_0_S_AXI_RVALID_pin;
     wire axi_ext_master_conn_0_S_AXI_RREADY_pin;
     wire [3:0] axi_ext_master_conn_0_S_AXI_ARCACHE_pin;
+    wire [3:0] axi_ext_master_conn_0_S_AXI_ARUSER_pin;
     wire [7:0] axi_ext_master_conn_0_S_AXI_AWLEN_pin;
     wire [2:0] axi_ext_master_conn_0_S_AXI_AWSIZE_pin;
     wire [1:0] axi_ext_master_conn_0_S_AXI_AWBURST_pin;
     wire [3:0] axi_ext_master_conn_0_S_AXI_AWCACHE_pin;
+    wire [3:0] axi_ext_master_conn_0_S_AXI_AWUSER_pin;
     wire axi_ext_master_conn_0_S_AXI_WLAST_pin;
     wire [7:0] axi_ext_master_conn_0_S_AXI_ARLEN_pin;
     wire [1:0] axi_ext_master_conn_0_S_AXI_ARBURST_pin;
@@ -97,7 +99,6 @@ module zc702(
     wire bus_clk;
 
     assign bus_clk = processing_system7_0_FCLK_CLK0_pin;
-//    BUFG  bufg_inst(.I(processing_system7_0_FCLK_CLK0_pin), .O(bus_clk));
     wire reset_host = 0;
     wire reset_global = ~processing_system7_0_FCLK_RESET0_N_pin | reset_host;
 
@@ -145,6 +146,7 @@ module zc702(
       .M_AXI_AWSIZE(axi_ext_master_conn_0_S_AXI_AWSIZE_pin),
       .M_AXI_AWBURST(axi_ext_master_conn_0_S_AXI_AWBURST_pin),
       .M_AXI_AWCACHE(axi_ext_master_conn_0_S_AXI_AWCACHE_pin),
+      .M_AXI_AWUSER(axi_ext_master_conn_0_S_AXI_AWUSER_pin),
       .M_AXI_WLAST(axi_ext_master_conn_0_S_AXI_WLAST_pin),
 
       .M_AXI_ARADDR(axi_ext_master_conn_0_S_AXI_ARADDR_pin),
@@ -157,6 +159,7 @@ module zc702(
       .M_AXI_RREADY(axi_ext_master_conn_0_S_AXI_RREADY_pin),
       .M_AXI_RLAST(axi_ext_master_conn_0_S_AXI_RLAST_pin),
       .M_AXI_ARCACHE(axi_ext_master_conn_0_S_AXI_ARCACHE_pin),
+      .M_AXI_ARUSER(axi_ext_master_conn_0_S_AXI_ARUSER_pin),
       .M_AXI_ARLEN(axi_ext_master_conn_0_S_AXI_ARLEN_pin),
       .M_AXI_ARBURST(axi_ext_master_conn_0_S_AXI_ARBURST_pin),
       .M_AXI_ARSIZE(axi_ext_master_conn_0_S_AXI_ARSIZE_pin),
@@ -233,9 +236,11 @@ module zc702(
     .axi_ext_master_conn_0_S_AXI_AWLEN_pin ( axi_ext_master_conn_0_S_AXI_AWLEN_pin ),
     .axi_ext_master_conn_0_S_AXI_RLAST_pin ( axi_ext_master_conn_0_S_AXI_RLAST_pin ),
     .axi_ext_master_conn_0_S_AXI_ARCACHE_pin ( axi_ext_master_conn_0_S_AXI_ARCACHE_pin ),
+    .axi_ext_master_conn_0_S_AXI_ARUSER_pin ( axi_ext_master_conn_0_S_AXI_ARUSER_pin ),
     .axi_ext_master_conn_0_S_AXI_AWSIZE_pin ( axi_ext_master_conn_0_S_AXI_AWSIZE_pin ),
     .axi_ext_master_conn_0_S_AXI_AWBURST_pin ( axi_ext_master_conn_0_S_AXI_AWBURST_pin ),
     .axi_ext_master_conn_0_S_AXI_AWCACHE_pin ( axi_ext_master_conn_0_S_AXI_AWCACHE_pin ),
+    .axi_ext_master_conn_0_S_AXI_AWUSER_pin ( axi_ext_master_conn_0_S_AXI_AWUSER_pin ),
     .axi_ext_master_conn_0_S_AXI_WLAST_pin ( axi_ext_master_conn_0_S_AXI_WLAST_pin ),
     .axi_ext_master_conn_0_S_AXI_ARLEN_pin ( axi_ext_master_conn_0_S_AXI_ARLEN_pin ),
     .axi_ext_master_conn_0_S_AXI_ARBURST_pin ( axi_ext_master_conn_0_S_AXI_ARBURST_pin ),

@@ -55,6 +55,7 @@ module accelerator
   output [2:0]                      M_AXI_AWSIZE,
   output [1:0]                      M_AXI_AWBURST,
   output [3:0]                      M_AXI_AWCACHE,
+  output [3:0]                      M_AXI_AWUSER,
   output                            M_AXI_WLAST,
 
   // these go to the ACP port (read)
@@ -68,6 +69,7 @@ module accelerator
   output                            M_AXI_RREADY,
   input                             M_AXI_RLAST,
   output [3:0]                      M_AXI_ARCACHE,
+  output [3:0]                      M_AXI_ARUSER,
   output [7:0]                      M_AXI_ARLEN,
   output [1:0]                      M_AXI_ARBURST,
   output [2:0]                      M_AXI_ARSIZE,
@@ -228,6 +230,8 @@ module accelerator
     .set_stb(set_stb_global),
     .set_addr(set_addr),
     .set_data(set_data),
+    .arcache(M_AXI_ARCACHE),
+    .awcache(M_AXI_AWCACHE),
     .soft_reset(soft_reset)
   );
 
@@ -430,7 +434,7 @@ module accelerator
     .m_axi_mm2s_arsize(M_AXI_ARSIZE),
     .m_axi_mm2s_arburst(M_AXI_ARBURST),
     .m_axi_mm2s_arprot(M_AXI_ARPROT),
-    .m_axi_mm2s_arcache(M_AXI_ARCACHE),
+//    .m_axi_mm2s_arcache(M_AXI_ARCACHE),
     .m_axi_mm2s_arvalid(M_AXI_ARVALID),
     .m_axi_mm2s_arready(M_AXI_ARREADY),
     .m_axi_mm2s_rdata(M_AXI_RDATA),
@@ -485,7 +489,7 @@ module accelerator
     .m_axi_s2mm_awsize(M_AXI_AWSIZE),
     .m_axi_s2mm_awburst(M_AXI_AWBURST),
     .m_axi_s2mm_awprot(M_AXI_AWPROT),
-    .m_axi_s2mm_awcache(M_AXI_AWCACHE),
+ //   .m_axi_s2mm_awcache(M_AXI_AWCACHE),
     .m_axi_s2mm_awvalid(M_AXI_AWVALID),
     .m_axi_s2mm_awready(M_AXI_AWREADY),
     .m_axi_s2mm_wdata(M_AXI_WDATA),

@@ -41,10 +41,10 @@ module global_settings
 
   always @* begin
     if (rst) begin
-      _aruser  <= 0;
-      _arcache <= 0;
-      _awuser  <= 0;
-      _awcache <= 0;
+      _aruser  <= 3;
+      _arcache <= 3;
+      _awuser  <= 3;
+      _awcache <= 333;
     end
     else if (write_aruser)   _aruser  <= set_data;
     else if (write_arcache)  _arcache <= set_data;
@@ -73,7 +73,10 @@ module global_settings
   end
 
   assign soft_reset = write_reset;
-
+  assign aruser  = _aruser;
+  assign arcache = _arcache;
+  assign awuser  = _awuser;
+  assign awcache = _awcache;
   //assign debug[9:0]   = get_addr_aligned;
   //assign debug[41:10] = get_data;
   //assign debug[42]    = read_sig;

@@ -34,7 +34,7 @@ save proj
 # Run XST to generate ngc netlist files.
 #
 xset parallel_synthesis yes
-#run stubgen
+run stubgen
 #run drc
 run netlist
 
