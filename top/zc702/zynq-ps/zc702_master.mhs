@@ -74,8 +74,8 @@
  PORT axi_ext_master_conn_0_S_AXI_RLAST_pin = axi_ext_master_conn_0_S_AXI_RLAST, DIR = O
  PORT axi_ext_master_conn_0_S_AXI_RVALID_pin = axi_ext_master_conn_0_S_AXI_RVALID, DIR = O
  PORT axi_ext_master_conn_0_S_AXI_RREADY_pin = axi_ext_master_conn_0_S_AXI_RREADY, DIR = I
- PORT axi_ext_master_conn_0_S_AXI_AWUSER_pin = axi_ext_master_conn_0_S_AXI_AWUSER, DIR = I, VEC = [3:0]
- PORT axi_ext_master_conn_0_S_AXI_ARUSER_pin = axi_ext_master_conn_0_S_AXI_ARUSER, DIR = I, VEC = [3:0]
+ PORT axi_ext_master_conn_0_S_AXI_AWUSER_pin = axi_ext_master_conn_0_S_AXI_AWUSER, DIR = I, VEC = [4:0]
+ PORT axi_ext_master_conn_0_S_AXI_ARUSER_pin = axi_ext_master_conn_0_S_AXI_ARUSER, DIR = I, VEC = [4:0]
 
 
 BEGIN processing_system7
@@ -175,6 +175,10 @@ BEGIN processing_system7
  PORT GPIO_I = processing_system7_0_GPIO_I
  PORT GPIO_O = processing_system7_0_GPIO_O
  PORT S_AXI_ACP_ACLK = processing_system7_0_FCLK_CLK0
+ PORT S_AXI_ACP_AWCACHE = axi_ext_master_conn_0_S_AXI_AWCACHE
+ PORT S_AXI_ACP_AWUSER = axi_ext_master_conn_0_S_AXI_AWUSER
+ PORT S_AXI_ACP_ARCACHE = axi_ext_master_conn_0_S_AXI_ARCACHE
+ PORT S_AXI_ACP_ARUSER = axi_ext_master_conn_0_S_AXI_ARUSER
 END
 
 BEGIN axi_ext_slave_conn
@@ -226,8 +230,8 @@ BEGIN axi_ext_master_conn
  PARAMETER C_M_AXI_PROTOCOL = AXI4
  PARAMETER C_M_AXI_SUPPORTS_USER_SIGNALS = 1
  PARAMETER C_M_AXI_DATA_WIDTH = 64
- PARAMETER C_M_AXI_AWUSER_WIDTH = 4
- PARAMETER C_M_AXI_ARUSER_WIDTH = 4
+ PARAMETER C_M_AXI_AWUSER_WIDTH = 5
+ PARAMETER C_M_AXI_ARUSER_WIDTH = 5
  PARAMETER C_USE_ADVANCED_PORTS = 1
  BUS_INTERFACE M_AXI = axi_interconnect_0
  PORT ACLK = processing_system7_0_FCLK_CLK0

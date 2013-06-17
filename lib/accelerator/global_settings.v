@@ -19,10 +19,10 @@ module global_settings
   input [C_ADDRWIDTH-1:0]      get_addr,
 
   output                       soft_reset,
-  output [C_DATAWIDTH-1:0]     aruser,
-  output [C_DATAWIDTH-1:0]     arcache,
-  output [C_DATAWIDTH-1:0]     awuser,
-  output [C_DATAWIDTH-1:0]     awcache
+  output [4:0]                 aruser,
+  output [3:0]                 arcache,
+  output [4:0]                 awuser,
+  output [3:0]                 awcache
 );
   reg [C_DATAWIDTH-1:0] _aruser;
   reg [C_DATAWIDTH-1:0] _arcache;
@@ -41,15 +41,15 @@ module global_settings
 
   always @* begin
     if (rst) begin
-      _aruser  <= 3;
-      _arcache <= 3;
-      _awuser  <= 3;
-      _awcache <= 333;
+      _aruser  <= 5'b11111;
+      _arcache <= 4'b1111;
+      _awuser  <= 5'b11111;
+      _awcache <= 4'b1111;
     end
-    else if (write_aruser)   _aruser  <= set_data;
-    else if (write_arcache)  _arcache <= set_data;
-    else if (write_awuser)   _awuser  <= set_data;
-    else if (write_awcache)  _awcache <= set_data;
+    else if (write_aruser)   _aruser  <= set_data & 5'b11111;
+    else if (write_arcache)  _arcache <= set_data & 4'b1111;
+    else if (write_awuser)   _awuser  <= set_data & 5'b11111;
+    else if (write_awcache)  _awcache <= set_data & 4'b1111;
   end
 
   wire [C_PAGEWIDTH-3:0] get_addr_aligned = get_addr[C_PAGEWIDTH-1:2];
@@ -63,10 +63,10 @@ module global_settings
 
   always @* begin
     if(read_sig) get_data <= signature;
-    else if (read_aruser)  get_data <= _aruser;
-    else if (read_arcache) get_data <= _arcache;
-    else if (read_awuser)  get_data <= _awuser;
-    else if (read_awcache) get_data <= _awcache;
+    else if (read_aruser)  get_data <= {27'h0, _aruser};
+    else if (read_arcache) get_data <= {26'h0, _arcache};
+    else if (read_awuser)  get_data <= {27'h0, _awuser};
+    else if (read_awcache) get_data <= {28'h0, _awcache};
     else if (read_s2h_nstr)get_data <= C_S2H_NUM_STREAMS;
     else if (read_h2s_nstr)get_data <= C_H2S_NUM_STREAMS;
     else get_data <= 32'h01234567;

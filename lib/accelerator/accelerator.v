@@ -55,7 +55,7 @@ module accelerator
   output [2:0]                      M_AXI_AWSIZE,
   output [1:0]                      M_AXI_AWBURST,
   output [3:0]                      M_AXI_AWCACHE,
-  output [3:0]                      M_AXI_AWUSER,
+  output [4:0]                      M_AXI_AWUSER,
   output                            M_AXI_WLAST,
 
   // these go to the ACP port (read)
@@ -69,7 +69,7 @@ module accelerator
   output                            M_AXI_RREADY,
   input                             M_AXI_RLAST,
   output [3:0]                      M_AXI_ARCACHE,
-  output [3:0]                      M_AXI_ARUSER,
+  output [4:0]                      M_AXI_ARUSER,
   output [7:0]                      M_AXI_ARLEN,
   output [1:0]                      M_AXI_ARBURST,
   output [2:0]                      M_AXI_ARSIZE,
@@ -231,7 +231,9 @@ module accelerator
     .set_addr(set_addr),
     .set_data(set_data),
     .arcache(M_AXI_ARCACHE),
+    .aruser(M_AXI_ARUSER),
     .awcache(M_AXI_AWCACHE),
+    .awuser(M_AXI_AWUSER),
     .soft_reset(soft_reset)
   );
 

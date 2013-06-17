@@ -80,12 +80,12 @@ module zc702(
     wire axi_ext_master_conn_0_S_AXI_RVALID_pin;
     wire axi_ext_master_conn_0_S_AXI_RREADY_pin;
     wire [3:0] axi_ext_master_conn_0_S_AXI_ARCACHE_pin;
-    wire [3:0] axi_ext_master_conn_0_S_AXI_ARUSER_pin;
+    wire [4:0] axi_ext_master_conn_0_S_AXI_ARUSER_pin;
     wire [7:0] axi_ext_master_conn_0_S_AXI_AWLEN_pin;
     wire [2:0] axi_ext_master_conn_0_S_AXI_AWSIZE_pin;
     wire [1:0] axi_ext_master_conn_0_S_AXI_AWBURST_pin;
     wire [3:0] axi_ext_master_conn_0_S_AXI_AWCACHE_pin;
-    wire [3:0] axi_ext_master_conn_0_S_AXI_AWUSER_pin;
+    wire [4:0] axi_ext_master_conn_0_S_AXI_AWUSER_pin;
     wire axi_ext_master_conn_0_S_AXI_WLAST_pin;
     wire [7:0] axi_ext_master_conn_0_S_AXI_ARLEN_pin;
     wire [1:0] axi_ext_master_conn_0_S_AXI_ARBURST_pin;
