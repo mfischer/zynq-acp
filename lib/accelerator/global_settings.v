@@ -29,6 +29,15 @@ module global_settings
   reg [C_DATAWIDTH-1:0] _awuser;
   reg [C_DATAWIDTH-1:0] _awcache;
 
+  reg [C_DATAWIDTH-1:0]  counter;
+
+  always @(posedge clk) begin
+    if (rst)
+      counter <= 0;
+    else
+      counter <= counter + 1;
+  end
+
 
   localparam [C_DATAWIDTH-1:0] signature = 32'hace0ba53;
 
@@ -60,6 +69,7 @@ module global_settings
   wire read_awcache  = get_stb && (get_addr_aligned == 4);
   wire read_s2h_nstr = get_stb && (get_addr_aligned == 5);
   wire read_h2s_nstr = get_stb && (get_addr_aligned == 6);
+  wire read_counter  = get_stb && (get_addr_aligned == 7);
 
   always @* begin
     if(read_sig) get_data <= signature;
@@ -69,6 +79,7 @@ module global_settings
     else if (read_awcache) get_data <= {28'h0, _awcache};
     else if (read_s2h_nstr)get_data <= C_S2H_NUM_STREAMS;
     else if (read_h2s_nstr)get_data <= C_H2S_NUM_STREAMS;
+    else if (read_counter) get_data <= counter;
     else get_data <= 32'h01234567;
   end
 

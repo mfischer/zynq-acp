@@ -35,6 +35,7 @@
   <set param="PCW::GPIO::V2.00.A::C_EN_EMIO_GPIO" value="1" />
   <set param="PCW::PRESET::GLOBAL::CONFIG" value="Default" />
   <set param="PCW::PRESET::GLOBAL::DEFAULT" value="powerup" />
+  <set param="PCW::FPGA0::PERIPHERAL::FREQMHZ" value="125.000000" />
   <set param="PCW::ENET0::PERIPHERAL::FREQMHZ" value="100 Mbps" />
   <set param="PCW::SDIO::PERIPHERAL::FREQMHZ" value="50.000000" />
   <set param="PCW::CAN::PERIPHERAL::FREQMHZ" value="100.000000" />
