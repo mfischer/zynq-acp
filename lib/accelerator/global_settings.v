@@ -71,10 +71,10 @@ module global_settings
       _awuser  <= 5'b11111;
       _awcache <= 4'b1111;
     end
-    else if (write_aruser)   _aruser  <= set_data & 5'b11111;
-    else if (write_arcache)  _arcache <= set_data & 4'b1111;
-    else if (write_awuser)   _awuser  <= set_data & 5'b11111;
-    else if (write_awcache)  _awcache <= set_data & 4'b1111;
+    else if (write_aruser)   _aruser  <= set_data[4:0];
+    else if (write_arcache)  _arcache <= set_data[3:0];
+    else if (write_awuser)   _awuser  <= set_data[4:0];
+    else if (write_awcache)  _awcache <= set_data[3:0];
   end
 
   wire [C_PAGEWIDTH-3:0] get_addr_aligned = get_addr[C_PAGEWIDTH-1:2];
