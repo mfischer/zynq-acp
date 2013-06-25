@@ -32,7 +32,6 @@ module global_settings
   input [C_ADDRWIDTH-1:0]      set_addr,
 
   output reg [C_DATAWIDTH-1:0] get_data,
-  input                        get_stb,
   input [C_ADDRWIDTH-1:0]      get_addr,
 
   output                       soft_reset,

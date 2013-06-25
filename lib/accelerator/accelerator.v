@@ -213,15 +213,12 @@ module accelerator
   wire [1:0] get_page = get_addr[C_PAGEWIDTH+1:C_PAGEWIDTH];
 
   wire set_stb_s2h = set_stb && (set_page == 2'h1);
-  wire get_stb_s2h = get_stb && (get_page == 2'h1);
   wire [C_S_AXI_DATA_WIDTH-1:0] get_data_s2h;
 
   wire set_stb_h2s = set_stb && (set_page == 2'h0);
-  wire get_stb_h2s = get_stb && (get_page == 2'h0);
   wire [C_S_AXI_DATA_WIDTH-1:0] get_data_h2s;
 
   wire set_stb_global = set_stb && (set_page == 2'h2);
-  wire get_stb_global = get_stb && (get_page == 2'h2);
   wire [C_S_AXI_DATA_WIDTH-1:0] get_data_global;
 
   assign get_data = (get_page == 2'h0) ? get_data_h2s
@@ -241,7 +238,6 @@ module accelerator
   settings0
   (
     .clk(clk), .rst(rst),
-    .get_stb(get_stb_global),
     .get_addr(get_addr),
     .get_data(get_data_global),
     .set_stb(set_stb_global),
@@ -291,7 +287,6 @@ module accelerator
 
     .get_data(get_data_s2h),
     .get_addr(get_addr),
-    .get_stb(get_stb_s2h),
 
     .stream_select(1'b0),
     .stream_valid(1'b1),
@@ -327,7 +322,6 @@ module accelerator
 
     .get_data(get_data_h2s),
     .get_addr(get_addr),
-    .get_stb(get_stb_h2s),
 
     .stream_select(which_stream_h2s),
     .stream_valid(1'b1),
@@ -343,7 +337,6 @@ module accelerator
   assign TRIG[4] = h2s_sts_tvalid;
   assign TRIG[5] = s2h_sts_tvalid;
 
-  assign DATA[0] = get_stb_s2h;
   assign DATA[1] = set_stb_s2h;
   assign DATA[33:2] = get_data;
   assign DATA[65:34] = get_addr;
