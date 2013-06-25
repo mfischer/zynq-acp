@@ -45,17 +45,11 @@ simulator "ISim (VHDL/Verilog)" \
 ##################################################
 TOP_SRCS = \
 	zc702.v \
-	coregen/xlnx_axi_datamover_synth.v \
 	coregen/xlnx_axi_datamover.xco \
-	coregen/xlnx_axi_fifo.v \
 	coregen/xlnx_axi_fifo.xco \
-	coregen/xlnx_axi_fifo8.v \
 	coregen/xlnx_axi_fifo8.xco \
-	coregen/xlnx_axi_fifo32.v \
 	coregen/xlnx_axi_fifo32.xco \
-	coregen/chipscope_icon.v \
 	coregen/chipscope_icon.xco \
-	coregen/chipscope_ila_large.v \
 	coregen/chipscope_ila_large.xco
 
 
