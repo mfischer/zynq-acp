@@ -44,9 +44,8 @@ module axi4_stream_master
 
   output [C_S_AXI_DATA_WIDTH-1:0]           get_data,
   input [C_S_AXI_ADDR_WIDTH-1:0]            get_addr,
-  input                                     get_stb,
 
-  input                                     stream_select,
+  input [C_STREAMS_WIDTH-1:0]               stream_select,
   input                                     stream_valid,
 
   output [63:0]                             debug
