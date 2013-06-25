@@ -152,10 +152,10 @@ module axi4_stream_master
     // Read registers
     wire [C_PAGEWIDTH-3:0] get_addr_aligned = get_addr[C_PAGEWIDTH-1:2];
     wire read_sig            = (get_addr_aligned == (0 + m*8));
-    wire read_status         = (get_addr_aligned == (4 + m*8));
-    wire read_sts_data_count = (get_addr_aligned == (5 + m*8));
-    wire read_cmd_addr_count = (get_addr_aligned == (6 + m*8));
-    wire read_cmd_size_count = (get_addr_aligned == (7 + m*8));
+    wire read_status         = (get_addr_aligned == (1 + m*8));
+    wire read_sts_data_count = (get_addr_aligned == (2 + m*8));
+    wire read_cmd_addr_count = (get_addr_aligned == (3 + m*8));
+    wire read_cmd_size_count = (get_addr_aligned == (4 + m*8));
 
     always @* begin
       if (read_sig)                 get_data_muxed[m] <= {16'hace0, this_streamer};
