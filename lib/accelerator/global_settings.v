@@ -65,7 +65,7 @@ module global_settings
   wire write_awuser  = set_stb && (set_addr_aligned == 3);
   wire write_awcache = set_stb && (set_addr_aligned == 4);
 
-  always @* begin
+  always @(posedge clk) begin
     if (rst) begin
       _aruser  <= 5'b11111;
       _arcache <= 4'b1111;
@@ -79,14 +79,14 @@ module global_settings
   end
 
   wire [C_PAGEWIDTH-3:0] get_addr_aligned = get_addr[C_PAGEWIDTH-1:2];
-  wire read_sig      = get_stb && (get_addr_aligned == 0);
-  wire read_aruser   = get_stb && (get_addr_aligned == 1);
-  wire read_arcache  = get_stb && (get_addr_aligned == 2);
-  wire read_awuser   = get_stb && (get_addr_aligned == 3);
-  wire read_awcache  = get_stb && (get_addr_aligned == 4);
-  wire read_s2h_nstr = get_stb && (get_addr_aligned == 5);
-  wire read_h2s_nstr = get_stb && (get_addr_aligned == 6);
-  wire read_counter  = get_stb && (get_addr_aligned == 7);
+  wire read_sig      = (get_addr_aligned == 0);
+  wire read_aruser   = (get_addr_aligned == 1);
+  wire read_arcache  = (get_addr_aligned == 2);
+  wire read_awuser   = (get_addr_aligned == 3);
+  wire read_awcache  = (get_addr_aligned == 4);
+  wire read_s2h_nstr = (get_addr_aligned == 5);
+  wire read_h2s_nstr = (get_addr_aligned == 6);
+  wire read_counter  = (get_addr_aligned == 7);
 
   always @* begin
     if(read_sig) get_data <= signature;

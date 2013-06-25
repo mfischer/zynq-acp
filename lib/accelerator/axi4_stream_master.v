@@ -136,8 +136,6 @@ module axi4_stream_master
     wire write_size    = set_stb && (set_addr_aligned == (2 + m*8));
     wire write_sts_rdy = set_stb && (set_addr_aligned == (3 + m*8));
     wire write_sts     = set_stb && (set_addr_aligned == (4 + m*8));
-    wire write_axuser  = set_stb && (set_addr_aligned == (5 + m*8));
-    wire write_axcache = set_stb && (set_addr_aligned == (6 + m*8));
 
     // Fill counts for fifos
     wire [10:0] sts_data_count;
